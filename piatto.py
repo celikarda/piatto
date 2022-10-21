@@ -30,6 +30,8 @@ for category in categories:
 html = "<style>" + css + "</style>"
 html += "<div class=\"menu-body\">"
 
+english = False #not functional yet
+
 for category in categories:
     items = list[category]
 
@@ -37,7 +39,10 @@ for category in categories:
 
     for item in items:
         if item["item_sold"] == "TRUE":
-            description = item["item_description"]
+            if english:
+                description = item["item_descriptionEN"]
+            else:
+                description = item["item_description"]
             if item["item_vegan"] == "TRUE":
                 description += "(Vegan)"
             if item["item_glutenfree"] == "TRUE":
