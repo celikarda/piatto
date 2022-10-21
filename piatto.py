@@ -10,10 +10,11 @@ csv = csv.DictReader(io.open(sys.argv[1], "r", encoding = "utf-8-sig"))
 categories = []
 rawItems = []
 for item in csv:
-    rawItems.append(item)
-    category = item["item_category"]
-    if category not in categories:
-        categories.append(category)
+    if item["item_sold"] == "TRUE":
+        rawItems.append(item)
+        category = item["item_category"]
+        if category not in categories:
+            categories.append(category)
 
 
 list = dict()
@@ -35,20 +36,21 @@ for category in categories:
     html+= "<div class=\"menu-section\"><h2 class=\"menu-section-title\">" + category + "</h2>"
 
     for item in items:
-        description = item["item_description"]
-        if item["item_vegan"] == "TRUE":
-            description += "(Vegan)"
-        if item["item_glutenfree"] == "TRUE":
-            description += "(Gluten-Free)"
+        if item["item_sold"] == "TRUE":
+            description = item["item_description"]
+            if item["item_vegan"] == "TRUE":
+                description += "(Vegan)"
+            if item["item_glutenfree"] == "TRUE":
+                description += "(Gluten-Free)"
 
 
-        html += "<div class=\"menu-item\">"
+            html += "<div class=\"menu-item\">"
 
-        html += "<div class=\"menu-item-name\">" + item["item_name"] + "</div>"
-        html += "<div class=\"menu-item-price\">$" + item["item_price"] + "</div>"
-        html += "<div class=\"menu-item-description\">" + description + "</div>"
+            html += "<div class=\"menu-item-name\">" + item["item_name"] + "</div>"
+            html += "<div class=\"menu-item-price\">" + item["item_price"] + " TL</div>"
+            html += "<div class=\"menu-item-description\">" + description + "</div>"
 
-        html += "</div>"
+            html += "</div>"
 
 
     html += "</div>"
